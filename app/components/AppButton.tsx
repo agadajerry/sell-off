@@ -4,15 +4,12 @@ import colors from "../config/color";
 
 interface IButton {
   title: string;
-  color: string;
-  onPress: () => void;
+  color?: string;
+  onPress?: () => void;
 }
 export const AppButton = ({ title, onPress, color }: IButton) => {
   return (
-    <TouchableOpacity
-      style={[styles.button, { backgroundColor: color }]}
-      onPress={onPress}
-    >
+    <TouchableOpacity style={[styles.button]} onPress={onPress}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );

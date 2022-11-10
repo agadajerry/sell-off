@@ -7,6 +7,13 @@ import defaultStyle from "../config/styles";
 interface IInputText {
   icon?: any;
   placeholder?: string;
+  autoCapitalize?: any;
+  autoCorrect?: boolean;
+  keyboardType?: any;
+  textContentType?: any;
+  secureTextEntry?: boolean;
+  onChangeText?: any;
+  onBlur?: any;
 }
 function AppTextInput({ icon, ...otherProps }: IInputText) {
   return (
@@ -32,6 +39,7 @@ const styles = StyleSheet.create({
     verticalMargin: 10,
     borderRadius: 25,
     flexDirection: "row",
+    marginBottom: 10,
   },
   icon: {
     marginRight: 10,
