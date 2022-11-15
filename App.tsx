@@ -16,16 +16,28 @@ import ListingScreen from "./app/screen/ListingScreen";
 import AppTextInput from "./app/components/AppTextInput";
 import AppPicker from "./app/components/AppPicker";
 import LoginScreen from "./app/screen/LoginScreen";
+import RegisterScreen from "./app/screen/RegisterScreen";
+import ListingEditingScreen from "./app/screen/ListingEditingScreen";
 
-const categories = [
-  { label: "Furniture", value: 1 },
-  { label: "Clothing", value: 2 },
-  { label: "Cameras", value: 3 },
-];
 export default function App() {
   const [category, setCategory] = React.useState();
 
-  return <LoginScreen />;
+  return (
+    <Screen>
+      {/* <ListItems
+        title="My title My titleMy titleMy titleMy titleMy titleMy titleMy titleMy titleMy titleMy titleMy titleMy titleMy title"
+        subTitle="My Subtitle My SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy Subtitle"
+        image={require("./app/assets/jerry.jpeg")}
+      />
+      <ListItems
+        title="My title"
+        subTitle="My Subtitle"
+        image={require("./app/assets/jacket.jpg")}
+      /> */}
+
+      <ListingEditingScreen />
+    </Screen>
+  );
 }
 
 const styles = StyleSheet.create({

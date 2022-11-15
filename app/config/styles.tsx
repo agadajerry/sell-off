@@ -4,7 +4,8 @@ import colors from "../config/color";
 export default {
   textInput: {
     fontSize: 18,
+
     fontfamily: Platform.OS === "android" ? "Roboto" : "Avenir",
-    color: colors.dark,
+    color: colors.medium,
   },
 };

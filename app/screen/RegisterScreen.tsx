@@ -1,32 +1,38 @@
 import React from "react";
-import { Image, StyleSheet } from "react-native";
-import { AppButton } from "../components/AppButton";
-import AppTextInput from "../components/AppTextInput";
 import Screen from "../components/Screen";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { AppText } from "../components/AppText";
-import ErrorMessage from "../forms/ErrorMessage";
+import { Image, StyleSheet } from "react-native";
 import AppFormField from "../forms/AppFormField";
-import SubmitButton from "../forms/SubmitButton";
+import ErrorMessage from "../forms/ErrorMessage";
+import { AppButton } from "../components/AppButton";
 
 const validationSchema = Yup.object().shape({
+  name: Yup.string().required().min(4).label("Name"),
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
 });
-
-function LoginScreen() {
+function RegisterScreen() {
   return (
     <Screen style={styles.container}>
-      <Image style={styles.logo} source={require("../assets/logo-red.png")} />
-
+      <Image source={require("../assets/logo-red.png")} style={styles.logo} />
       <Formik
-        initialValues={{ password: "", email: "" }}
+        initialValues={{ name: "", email: "", password: "" }}
         onSubmit={(values) => console.log(values)}
         validationSchema={validationSchema}
       >
-        {({ errors, touched }) => (
+        {({ handleSubmit, errors, touched }) => (
           <>
+            <AppFormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              icon="account"
+              name="name"
+              keyboardType="default"
+              placeholder="Name"
+              textContentType="name"
+            />
+            <ErrorMessage error={errors.name} visible={touched.name} />
             <AppFormField
               autoCapitalize="none"
               autoCorrect={false}
@@ -37,7 +43,6 @@ function LoginScreen() {
               textContentType="emailAddress"
             />
             <ErrorMessage error={errors.email} visible={touched.email} />
-
             <AppFormField
               autoCapitalize="none"
               autoCorrect={false}
@@ -49,8 +54,7 @@ function LoginScreen() {
               secureTextEntry={true}
             />
             <ErrorMessage error={errors.password} visible={touched.password} />
-
-            <SubmitButton title={"Login"} />
+            <AppButton title="Register" onPress={handleSubmit} />
           </>
         )}
       </Formik>
@@ -70,4 +74,5 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
-export default LoginScreen;
+
+export default RegisterScreen;

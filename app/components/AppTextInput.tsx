@@ -14,10 +14,11 @@ interface IInputText {
   secureTextEntry?: boolean;
   onChangeText?: any;
   onBlur?: any;
+  width?: number;
 }
-function AppTextInput({ icon, ...otherProps }: IInputText) {
+function AppTextInput({ icon, width, ...otherProps }: IInputText) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { width }]}>
       {icon && (
         <MaterialCommunityIcons
           name={icon}
@@ -34,7 +35,6 @@ function AppTextInput({ icon, ...otherProps }: IInputText) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.light,
-    width: "100%",
     padding: 15,
     verticalMargin: 10,
     borderRadius: 25,

@@ -23,6 +23,9 @@ interface IInputText {
   items?: any;
   onSelectItem?: any;
   selectedItem?: any;
+  name?: string;
+  width?: string;
+  PickerItemComponent?: any;
 }
 
 const iconName: any = "chevron-down";
@@ -32,12 +35,14 @@ function AppPicker({
   items,
   selectedItem,
   onSelectItem,
+  width,
+  PickerItemComponent = PickerItems,
 }: IInputText) {
   const [modalVisible, setModalVisible] = React.useState(false);
   return (
     <React.Fragment>
       <TouchableWithoutFeedback onPress={() => setModalVisible(!modalVisible)}>
-        <View style={styles.container}>
+        <View style={[styles.container, { width }]}>
           {icon && (
             <MaterialCommunityIcons
               name={icon}
@@ -46,9 +51,12 @@ function AppPicker({
               style={styles.icon}
             />
           )}
-          <AppText style={styles.text}>
-            {selectedItem ? selectedItem.label : placeholder}
-          </AppText>
+          {selectedItem ? (
+            <AppText style={styles.text}>{selectedItem.label}</AppText>
+          ) : (
+            <AppText style={styles.placeholder}>{placeholder}</AppText>
+          )}
+
           <MaterialCommunityIcons
             name={iconName}
             size={20}
@@ -63,7 +71,8 @@ function AppPicker({
             data={items}
             keyExtractor={(item) => item.value.toString()}
             renderItem={({ item }) => (
-              <PickerItems
+              <PickerItemComponent
+                item={item}
                 label={item.label}
                 onPress={() => {
                   setModalVisible(false);
@@ -82,17 +91,21 @@ function AppPicker({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.light,
-    width: "100%",
     padding: 15,
     verticalMargin: 10,
     borderRadius: 25,
     flexDirection: "row",
+    marginBottom: 10,
   },
   icon: {
     marginRight: 10,
     marginVertical: 5,
   },
   text: {
+    flex: 1,
+  },
+  placeholder: {
+    color: colors.medium,
     flex: 1,
   },
 });

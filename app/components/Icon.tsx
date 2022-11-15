@@ -4,23 +4,18 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 interface IIcon {
   name: string | any;
-  backgroundColor?: string;
+  backgroundColor: string;
   size?: number;
   iconColor?: string;
 }
-function Icon({
-  name,
-  backgroundColor = "#000",
-  size = 40,
-  iconColor = "#fff",
-}: IIcon) {
+function Icon({ name, backgroundColor, size = 40, iconColor = "#fff" }: IIcon) {
   return (
     <View
       style={{
         width: size,
         height: size,
         borderRadius: 100 / 2,
-        backgroundColor,
+        backgroundColor: backgroundColor,
         justifyContent: "center",
         alignItems: "center",
       }}
