@@ -11,6 +11,7 @@ interface IPickerField {
   selectedItem?: any;
   width?: string;
   PickerItemComponent?: any;
+  numberOfColumns?: number;
 }
 function AppFormPicker({
   items,
@@ -19,12 +20,14 @@ function AppFormPicker({
   onSelectItem: any,
   width = "100%",
   PickerItemComponent,
+  numberOfColumns,
   ...otherProps
 }: IPickerField) {
   const { setFieldValue, values } = useFormikContext();
   return (
     <>
       <AppPicker
+        numberOfColumns={numberOfColumns}
         items={items}
         name={name}
         placeholder={placeholder}

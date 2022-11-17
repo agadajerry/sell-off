@@ -1,41 +1,41 @@
 // import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet } from "react-native";
-import { useDeviceOrientation } from "@react-native-community/hooks";
-import WelcomeScreen from "./app/screen/WelcomeScreen";
-import ViewImageScreen from "./app/screen/ViewImageScreen";
-import { AppButton } from "./app/components/AppButton";
-import Card from "./app/components/Card";
-import ListingDetailsScreen from "./app/components/ListingDetailsScreen";
-import MessagingScreen from "./app/screen/MessagingScreen";
-import Icon from "./app/components/Icon";
+import React, { useEffect } from "react";
+import { Button, StyleSheet, Image } from "react-native";
 import Screen from "./app/components/Screen";
-import ListItems from "./app/components/ListItems";
-import AccountScreen from "./app/screen/AccountScreen";
-import ListingScreen from "./app/screen/ListingScreen";
-import AppTextInput from "./app/components/AppTextInput";
-import AppPicker from "./app/components/AppPicker";
-import LoginScreen from "./app/screen/LoginScreen";
-import RegisterScreen from "./app/screen/RegisterScreen";
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
 import ListingEditingScreen from "./app/screen/ListingEditingScreen";
+import ImageInput from "./app/components/ImageInput";
 
 export default function App() {
-  const [category, setCategory] = React.useState();
+  const [imageUri, setImageUri] = React.useState();
 
+  const requestPermission = async () => {
+    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
+    if (!granted) {
+      alert("You need to enable permission to access the library.");
+    }
+  };
+
+  useEffect(() => {
+    requestPermission();
+  }, []);
+
+  const selectImage = async () => {
+    try {
+      const result: any = await ImagePicker.launchImageLibraryAsync();
+      if (!result.cancelled) {
+        setImageUri(result.uri);
+      }
+    } catch (error) {
+      console.log("Error reading an image", error);
+    }
+  };
+
+  console.log(imageUri);
   return (
     <Screen>
-      {/* <ListItems
-        title="My title My titleMy titleMy titleMy titleMy titleMy titleMy titleMy titleMy titleMy titleMy titleMy titleMy title"
-        subTitle="My Subtitle My SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy SubtitleMy Subtitle"
-        image={require("./app/assets/jerry.jpeg")}
-      />
-      <ListItems
-        title="My title"
-        subTitle="My Subtitle"
-        image={require("./app/assets/jacket.jpg")}
-      /> */}
-
-      <ListingEditingScreen />
+      <ImageInput />
     </Screen>
   );
 }

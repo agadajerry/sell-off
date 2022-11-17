@@ -26,6 +26,7 @@ interface IInputText {
   name?: string;
   width?: string;
   PickerItemComponent?: any;
+  numberOfColumns?: number;
 }
 
 const iconName: any = "chevron-down";
@@ -37,6 +38,7 @@ function AppPicker({
   onSelectItem,
   width,
   PickerItemComponent = PickerItems,
+  numberOfColumns = 1,
 }: IInputText) {
   const [modalVisible, setModalVisible] = React.useState(false);
   return (
@@ -70,6 +72,7 @@ function AppPicker({
           <FlatList
             data={items}
             keyExtractor={(item) => item.value.toString()}
+            numColumns={numberOfColumns}
             renderItem={({ item }) => (
               <PickerItemComponent
                 item={item}

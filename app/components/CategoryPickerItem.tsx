@@ -14,9 +14,9 @@ function CategoryPickerItem({ item, onPress }: ICategoryPicker) {
         <Icon
           name={item.icon}
           backgroundColor={item.backgroundColor}
-          size={80}
+          size={50}
         />
-        <AppText>{item.label}</AppText>
+        <AppText style={styles.label}>{item.label}</AppText>
       </View>
     </TouchableOpacity>
   );
@@ -25,6 +25,13 @@ function CategoryPickerItem({ item, onPress }: ICategoryPicker) {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 30,
+    paddingVertical: 15,
+    alignItems: "center",
+    //  width: "33%",
+  },
+  label: {
+    marginTop: 5,
+    textAlign: "center",
   },
 });
 

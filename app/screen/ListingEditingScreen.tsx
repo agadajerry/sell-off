@@ -9,6 +9,7 @@ import { AppButton } from "../components/AppButton";
 import ErrorMessage from "../forms/ErrorMessage";
 import AppFormPicker from "../components/AppFormPicker";
 import CategoryPickerItem from "../components/CategoryPickerItem";
+import ImageInput from "../components/ImageInput";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -17,9 +18,60 @@ const validationSchema = Yup.object().shape({
   category: Yup.object().required().nullable().label("Category"),
 });
 const categories = [
-  { label: "Furniture", value: 1, backgroundColor: "red", icon: "apps" },
-  { label: "Clothing", value: 2, backgroundColor: "green", icon: "email" },
-  { label: "Cameras", value: 3, backgroundColor: "blue", icon: "lock" },
+  {
+    label: "Furniture",
+    value: 1,
+    backgroundColor: "#fc5565",
+    icon: "floor-lamp",
+  },
+  {
+    label: "Clothing",
+    value: 2,
+    backgroundColor: "#fd9644",
+    icon: "shoe-heel",
+  },
+  {
+    label: "Camera",
+    value: 3,
+    backgroundColor: "#fed330",
+    icon: "camera",
+  },
+  {
+    label: "Games",
+    value: 4,
+    backgroundColor: "#26de81",
+    icon: "cards",
+  },
+  {
+    label: "Sports",
+    value: 5,
+    backgroundColor: "#2bcbba",
+    icon: "basketball",
+  },
+  {
+    label: "Movies & Music",
+    value: 6,
+    backgroundColor: "#45aaf2",
+    icon: "headphones",
+  },
+  {
+    label: "Books",
+    value: 7,
+    backgroundColor: "#4b7bec",
+    icon: "book-open-variant",
+  },
+  {
+    label: "Other",
+    value: 8,
+    backgroundColor: "#a55eea",
+    icon: "application",
+  },
+  {
+    label: "Cars",
+    value: 9,
+    backgroundColor: "#778ca3",
+    icon: "car",
+  },
 ];
 function ListingEditingScreen() {
   return (
@@ -47,13 +99,14 @@ function ListingEditingScreen() {
             />
             <ErrorMessage error={errors.price} visible={touched.price} />
             <AppFormPicker
+              numberOfColumns={3}
+              PickerItemComponent={CategoryPickerItem}
               name="category"
               placeholder="Category"
               items={categories}
               onSelectItem={(item: any) => setFieldValue("category", item)}
               selectedItem={values.category}
               width="50%"
-              PickerItemComponent={CategoryPickerItem}
             />
 
             <ErrorMessage error={errors.category} visible={touched.category} />

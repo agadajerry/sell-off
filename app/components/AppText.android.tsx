@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto",
     textTransform: "capitalize",
     marginBottom: 7,
-    fontSize: 20,
+    fontSize: 12,
   },
 });
