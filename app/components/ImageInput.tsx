@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     overflow: "hidden",
     width: 100,
+    marginVertical: 10,
   },
   image: {
     width: "100%",

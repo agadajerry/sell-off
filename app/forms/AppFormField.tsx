@@ -21,7 +21,8 @@ interface IAppFormField {
 }
 
 function AppFormField({ name, width, ...otherProps }: IAppFormField) {
-  const { setFieldTouched, handleChange } = useFormikContext();
+  const { setFieldTouched, handleChange, errors, touched } =
+    useFormikContext<any>();
 
   return (
     <>
@@ -31,7 +32,7 @@ function AppFormField({ name, width, ...otherProps }: IAppFormField) {
         onBlur={() => setFieldTouched(name)}
         width={width}
       />
-      {/* <ErrorMessage error={errors.name} visible={touched.name} /> */}
+      <ErrorMessage error={errors[name]} visible={touched[name]} />
     </>
   );
 }

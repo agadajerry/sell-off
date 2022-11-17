@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import Screen from "./app/components/Screen";
 import ImageInputList from "./app/components/ImageInputList";
+import ListingEditingScreen from "./app/screen/ListingEditingScreen";
 
 export default function App() {
   const [imageUris, setImageUris] = React.useState<any[]>([]);
@@ -14,16 +15,7 @@ export default function App() {
   const handleRemoveImage = (uri: any) => {
     setImageUris(imageUris.filter((imageUri: any) => imageUri !== uri));
   };
-  return (
-    <Screen>
-      <ImageInputList
-        imageUris={imageUris}
-        onChangeImage={(uri: any) => setImageUris(uri)}
-        onAddImage={handleAddImage}
-        onRemoveImage={handleRemoveImage}
-      />
-    </Screen>
-  );
+  return <ListingEditingScreen />;
 }
 
 const styles = StyleSheet.create({

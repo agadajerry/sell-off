@@ -8,7 +8,7 @@ function ImageInputList({ imageUris = [], onRemoveImage, onAddImage }: any) {
     <View>
       <ScrollView
         ref={scrollView}
-        horizontal={false}
+        horizontal={true}
         onContentSizeChange={() => scrollView.current.scrollToEnd()}
       >
         <View style={styles.container}>
@@ -31,8 +31,6 @@ function ImageInputList({ imageUris = [], onRemoveImage, onAddImage }: any) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    flexWrap: "wrap",
-    padding: 10,
   },
   image: {
     margin: 3,

@@ -7,7 +7,7 @@ interface IButton {
   color?: string;
   onPress?: () => void;
 }
-export const AppButton = ({ title, onPress, color }: IButton) => {
+export const AppButton = ({ title, onPress }: IButton) => {
   return (
     <TouchableOpacity style={[styles.button]} onPress={onPress}>
       <Text style={styles.text}>{title}</Text>
