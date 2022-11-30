@@ -5,13 +5,14 @@ import colors from "../config/color";
 import ListItems from "./ListItems";
 import ListItemDeletionAction from "./ListItemDeletionAction";
 
-function ListingDetailsScreen() {
+function ListingDetailsScreen({ route }: any) {
+  const listings = route.params;
   return (
     <View>
-      <Image source={require("../assets/jacket.jpg")} style={styles.image} />
+      <Image source={{ uri: listings.images[0].url }} style={styles.image} />
       <View style={styles.detailsContainer}>
-        <AppText style={styles.title}>Red jacket for sale</AppText>
-        <AppText style={styles.price}>$100</AppText>
+        <AppText style={styles.title}>{listings.title}</AppText>
+        <AppText style={styles.price}>${listings.price}</AppText>
         <View style={styles.userContainer}>
           <ListItems
             image={require("../assets/jerry.jpeg")}

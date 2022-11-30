@@ -7,9 +7,12 @@ interface IButton {
   color?: string;
   onPress?: () => void;
 }
-export const AppButton = ({ title, onPress }: IButton) => {
+export const AppButton = ({ title, onPress, color }: IButton) => {
   return (
-    <TouchableOpacity style={[styles.button]} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.button, { backgroundColor: color }]}
+      onPress={onPress}
+    >
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
@@ -18,9 +21,9 @@ export const AppButton = ({ title, onPress }: IButton) => {
 const styles = StyleSheet.create({
   button: {
     width: "100%",
-    backgroundColor: colors.primary,
     borderRadius: 25,
     marginVertical: 10,
+    backgroundColor: colors.primary,
   },
   text: {
     fontSize: 20,

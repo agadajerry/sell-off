@@ -21,7 +21,7 @@ interface IAppFormField {
 }
 
 function AppFormField({ name, width, ...otherProps }: IAppFormField) {
-  const { setFieldTouched, handleChange, errors, touched } =
+  const { setFieldTouched, handleChange, errors, touched, setFieldValue } =
     useFormikContext<any>();
 
   return (

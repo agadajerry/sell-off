@@ -1,15 +1,19 @@
-import { Formik } from "formik";
-import React from "react";
+import { Form, Formik } from "formik";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import Screen from "../components/Screen";
+
 import * as Yup from "yup";
 import AppFormField from "../forms/AppFormField";
+import colors from "../config/color";
 import { AppButton } from "../components/AppButton";
 import ErrorMessage from "../forms/ErrorMessage";
 import AppFormPicker from "../components/AppFormPicker";
 import CategoryPickerItem from "../components/CategoryPickerItem";
 import FormImagePicker from "../components/FormImagePicker";
 import useLocation from "../hooks/useLocation";
+import { addListings } from "../api/Listings";
+import UploadScreen from "./UploadScreen";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -75,9 +79,30 @@ const categories = [
   },
 ];
 function ListingEditingScreen() {
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+
   const location = useLocation();
+  const handleSubmitData = async (listing: any, resetForm: any) => {
+    setIsUploading(true);
+    setUploadProgress(0);
+    const result = await addListings(
+      { ...listing, location },
+      (progress: any) => setUploadProgress(progress)
+    );
+    if (!result.ok) {
+      setIsUploading(false);
+      alert("Could not save the listing");
+    }
+    setIsUploading(false);
+  };
   return (
     <Screen style={styles.container}>
+      <UploadScreen
+        progress={uploadProgress}
+        visible={isUploading}
+        onDone={() => setIsUploading(false)}
+      />
       <Formik
         initialValues={{
           title: "",
@@ -87,7 +112,9 @@ function ListingEditingScreen() {
           images: [],
         }}
         validationSchema={validationSchema}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values, { resetForm }) => {
+          handleSubmitData(values, resetForm);
+        }}
       >
         {({ errors, touched, setFieldValue, values, handleSubmit }) => (
           <>
@@ -122,7 +149,11 @@ function ListingEditingScreen() {
               error={errors.description}
               visible={touched.description}
             />
-            <AppButton title="Post" onPress={handleSubmit} />
+            <AppButton
+              title="Post"
+              color={colors.primary}
+              onPress={handleSubmit}
+            />
           </>
         )}
       </Formik>

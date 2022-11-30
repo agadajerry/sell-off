@@ -6,6 +6,7 @@ import { Image, StyleSheet } from "react-native";
 import AppFormField from "../forms/AppFormField";
 import ErrorMessage from "../forms/ErrorMessage";
 import { AppButton } from "../components/AppButton";
+import colors from "../config/color";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().min(4).label("Name"),
@@ -32,7 +33,6 @@ function RegisterScreen() {
               placeholder="Name"
               textContentType="name"
             />
-            <ErrorMessage error={errors.name} visible={touched.name} />
             <AppFormField
               autoCapitalize="none"
               autoCorrect={false}
@@ -42,7 +42,6 @@ function RegisterScreen() {
               placeholder="Email"
               textContentType="emailAddress"
             />
-            <ErrorMessage error={errors.email} visible={touched.email} />
             <AppFormField
               autoCapitalize="none"
               autoCorrect={false}
@@ -53,8 +52,11 @@ function RegisterScreen() {
               textContentType="password"
               secureTextEntry={true}
             />
-            <ErrorMessage error={errors.password} visible={touched.password} />
-            <AppButton title="Register" onPress={handleSubmit} />
+            <AppButton
+              title="Register"
+              onPress={handleSubmit}
+              color={colors.secondary}
+            />
           </>
         )}
       </Formik>

@@ -1,14 +1,11 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
-import { AppButton } from "../components/AppButton";
-import AppTextInput from "../components/AppTextInput";
 import Screen from "../components/Screen";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { AppText } from "../components/AppText";
-import ErrorMessage from "../forms/ErrorMessage";
 import AppFormField from "../forms/AppFormField";
 import SubmitButton from "../forms/SubmitButton";
+import colors from "../config/color";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -25,7 +22,7 @@ function LoginScreen() {
         onSubmit={(values) => console.log(values)}
         validationSchema={validationSchema}
       >
-        {({ errors, touched }) => (
+        {() => (
           <>
             <AppFormField
               autoCapitalize="none"
@@ -36,8 +33,6 @@ function LoginScreen() {
               placeholder="Email"
               textContentType="emailAddress"
             />
-            <ErrorMessage error={errors.email} visible={touched.email} />
-
             <AppFormField
               autoCapitalize="none"
               autoCorrect={false}
@@ -48,9 +43,8 @@ function LoginScreen() {
               textContentType="password"
               secureTextEntry={true}
             />
-            <ErrorMessage error={errors.password} visible={touched.password} />
 
-            <SubmitButton title={"Login"} />
+            <SubmitButton title={"Login"} color={colors.primary} />
           </>
         )}
       </Formik>
@@ -66,7 +60,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     alignSelf: "center",
-    marginTop: 50,
+    marginTop: 30,
     marginBottom: 20,
   },
 });

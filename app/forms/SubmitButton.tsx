@@ -4,11 +4,12 @@ import { useFormikContext } from "formik";
 
 interface IButton {
   title: string;
+  color?: string;
 }
 
-function SubmitButton({ title }: IButton) {
+function SubmitButton({ color }: IButton) {
   const { handleSubmit } = useFormikContext();
-  return <AppButton title={"Login"} onPress={handleSubmit} />;
+  return <AppButton title={"Login"} onPress={handleSubmit} color={color} />;
 }
 
 export default SubmitButton;
