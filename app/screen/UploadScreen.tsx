@@ -6,8 +6,9 @@ import LottieView from "lottie-react-native";
 interface IUploadScreenProps {
   visible: boolean;
   progress: number;
+  onDone: () => void;
 }
-function UploadScreen({ visible, progress }: IUploadScreenProps) {
+function UploadScreen({ onDone, visible, progress }: IUploadScreenProps) {
   return (
     <Modal visible={visible}>
       <View style={styles.container}>
@@ -21,6 +22,7 @@ function UploadScreen({ visible, progress }: IUploadScreenProps) {
           <LottieView
             autoPlay
             loop={false}
+            onAnimationFinish={onDone}
             source={require("../assets/animations/done.json")}
             style={styles.animation}
           />

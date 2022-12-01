@@ -1,19 +1,25 @@
 import React from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 import colors from "../config/color";
-import { AppText } from "./AppText";
+import { Image } from "react-native-expo-image-cache";
+
 interface ICard {
   title: string;
   subTitle: string;
   imageUrl: any;
+  thumbnailUrl: any;
   onPress?: () => void;
 }
-function Card({ title, subTitle, imageUrl, onPress }: ICard) {
+function Card({ title, subTitle, imageUrl, onPress, thumbnailUrl }: ICard) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
-        <Image source={{ uri: imageUrl }} style={styles.image} />
+        <Image
+          uri={imageUrl}
+          preview={{ uri: thumbnailUrl }}
+          style={styles.image}
+        />
         <View style={styles.detailsContainer}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>{subTitle}</Text>
