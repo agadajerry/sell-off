@@ -1,4 +1,5 @@
 import * as SecureStore from "expo-secure-store";
+import jwtDecode from "jwt-decode";
 const key = "authToken";
 const storeToken = async (authToken: string) => {
   try {
@@ -15,6 +16,11 @@ const getToken = async () => {
   }
 };
 
+const getUser = async () => {
+  const token: any = await getToken();
+  return !token ? null : jwtDecode(token);
+};
+
 const removeToken = async () => {
   try {
     await SecureStore.deleteItemAsync(key);
@@ -22,4 +28,4 @@ const removeToken = async () => {
     console.log("Error removing the auth token", error);
   }
 };
-export default { getToken, storeToken, removeToken };
+export default { getUser, storeToken, removeToken, getToken };

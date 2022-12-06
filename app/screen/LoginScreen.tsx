@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Image, StyleSheet } from "react-native";
 import Screen from "../components/Screen";
 import { Formik } from "formik";
@@ -8,9 +8,7 @@ import SubmitButton from "../forms/SubmitButton";
 import colors from "../config/color";
 import { loginUser } from "../api/auth";
 import ErrorMessage from "../forms/ErrorMessage";
-import jwtDecode from "jwt-decode";
-import AuthContext from "../auth/context";
-import storage from "../auth/storage";
+import useAuth from "../auth/useAuth";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -18,18 +16,17 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginScreen() {
-  const { user, setUser } = useContext(AuthContext);
+  const { login } = useAuth();
 
   const [loginFailed, setLoginFailed] = React.useState(false);
+
   const handleSubmit = async ({ email, password }: any) => {
     const result: any = await loginUser(email, password);
     if (!result.ok) {
       return setLoginFailed(true);
     }
     setLoginFailed(false);
-    const userDetails = jwtDecode(result.data);
-    setUser(userDetails);
-    storage.storeToken(result.data);
+    login(result.data);
   };
   return (
     <Screen style={styles.container}>
