@@ -18,6 +18,7 @@ function Card({ title, subTitle, imageUrl, onPress, thumbnailUrl }: ICard) {
         <Image
           uri={imageUrl}
           preview={{ uri: thumbnailUrl }}
+          tint="light"
           style={styles.image}
         />
         <View style={styles.detailsContainer}>

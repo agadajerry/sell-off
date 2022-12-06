@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Image, StyleSheet } from "react-native";
 import Screen from "../components/Screen";
 import { Formik } from "formik";
@@ -6,6 +6,11 @@ import * as Yup from "yup";
 import AppFormField from "../forms/AppFormField";
 import SubmitButton from "../forms/SubmitButton";
 import colors from "../config/color";
+import { loginUser } from "../api/auth";
+import ErrorMessage from "../forms/ErrorMessage";
+import jwtDecode from "jwt-decode";
+import AuthContext from "../auth/context";
+import storage from "../auth/storage";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -13,17 +18,34 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginScreen() {
+  const { user, setUser } = useContext(AuthContext);
+
+  const [loginFailed, setLoginFailed] = React.useState(false);
+  const handleSubmit = async ({ email, password }: any) => {
+    const result: any = await loginUser(email, password);
+    if (!result.ok) {
+      return setLoginFailed(true);
+    }
+    setLoginFailed(false);
+    const userDetails = jwtDecode(result.data);
+    setUser(userDetails);
+    storage.storeToken(result.data);
+  };
   return (
     <Screen style={styles.container}>
       <Image style={styles.logo} source={require("../assets/logo-red.png")} />
 
       <Formik
         initialValues={{ password: "", email: "" }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
         {() => (
           <>
+            <ErrorMessage
+              error="Invalid email and/or password"
+              visible={loginFailed}
+            />
             <AppFormField
               autoCapitalize="none"
               autoCorrect={false}
