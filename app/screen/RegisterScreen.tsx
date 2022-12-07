@@ -7,11 +7,12 @@ import AppFormField from "../forms/AppFormField";
 import ErrorMessage from "../forms/ErrorMessage";
 import { AppButton } from "../components/AppButton";
 import colors from "../config/color";
-import registerUser from "../api/users";
+import registerUser, { IUser } from "../api/users";
 import { loginUser } from "../api/auth";
 import useAuth from "../auth/useAuth";
 import { useApi } from "../hooks/useApi";
 import ActivityIndicator from "../components/ActivityIndicator";
+import SubmitButton from "../forms/SubmitButton";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().min(4).label("Name"),
@@ -24,7 +25,7 @@ function RegisterScreen() {
   const registerApi = useApi(registerUser);
   const loginApi = useApi(loginUser);
 
-  const handleUserRegister = async (values: any) => {
+  const handleSubmit = async (values: any) => {
     const result: any = await registerApi.request(values);
     if (!result.ok) {
       if (result.data) setError(result.data.error);
@@ -34,60 +35,59 @@ function RegisterScreen() {
       }
       return;
     }
+
     const { data }: any = await loginApi.request(values.email, values.password);
+
     auth.login(data);
   };
 
   return (
-    <Screen style={styles.container}>
+    <>
       <ActivityIndicator visible={registerApi.loading || loginApi.loading} />
-      <Image source={require("../assets/logo-red.png")} style={styles.logo} />
-      <Formik
-        initialValues={{ name: "", email: "", password: "" }}
-        onSubmit={(values) => {
-          handleUserRegister(values);
-        }}
-        validationSchema={validationSchema}
-      >
-        {({ handleSubmit }) => (
-          <>
-            <AppFormField
-              autoCapitalize="none"
-              autoCorrect={false}
-              icon="account"
-              name="name"
-              keyboardType="default"
-              placeholder="Name"
-              textContentType="name"
-            />
-            <AppFormField
-              autoCapitalize="none"
-              autoCorrect={false}
-              icon="email"
-              name="email"
-              keyboardType="email-address"
-              placeholder="Email"
-              textContentType="emailAddress"
-            />
-            <AppFormField
-              autoCapitalize="none"
-              autoCorrect={false}
-              icon="lock"
-              name="password"
-              keyboardType="default"
-              placeholder="Password"
-              textContentType="password"
-              secureTextEntry={true}
-            />
-            <AppButton
-              title="Register"
-              onPress={handleSubmit}
-              color={colors.secondary}
-            />
-          </>
-        )}
-      </Formik>
-    </Screen>
+      <Screen style={styles.container}>
+        <ErrorMessage error={error} visible={error} />
+        <Image source={require("../assets/logo-red.png")} style={styles.logo} />
+        <Formik
+          initialValues={{ name: "", email: "", password: "" }}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          {() => (
+            <>
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                icon="account"
+                name="name"
+                keyboardType="default"
+                placeholder="Name"
+                textContentType="name"
+              />
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                icon="email"
+                name="email"
+                keyboardType="email-address"
+                placeholder="Email"
+                textContentType="emailAddress"
+              />
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                icon="lock"
+                name="password"
+                keyboardType="default"
+                placeholder="Password"
+                textContentType="password"
+                secureTextEntry={true}
+              />
+              <SubmitButton title="Register" color={colors.secondary} />
+            </>
+          )}
+        </Formik>
+      </Screen>
+    </>
   );
 }
 
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     alignSelf: "center",
-    marginTop: 50,
+    marginTop: 10,
     marginBottom: 20,
   },
 });
